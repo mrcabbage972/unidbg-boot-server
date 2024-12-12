@@ -174,7 +174,7 @@ public class TTEncryptService {
         //}
         byte[] data = new byte[16];
         // 执行Jni方法
-        ByteArray array = TTEncryptUtils.callStaticJniMethodObject(emulator, "ttEncrypt([BI)[B", new ByteArray(vm, data), data.length);
+        return array.getValue();
         return array.getValue();
     }
 
