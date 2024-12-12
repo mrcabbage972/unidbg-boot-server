@@ -68,7 +68,6 @@ public class TTEncryptService {
     }
 
     public void destroy() throws IOException {
-        emulator.close();
         if (DEBUG_FLAG) {
             log.info("destroy");
         }
@@ -175,6 +174,7 @@ public class TTEncryptService {
         byte[] data = new byte[16];
         // 执行Jni方法
         ByteArray array = TTEncryptUtils.callStaticJniMethodObject(emulator, "ttEncrypt([BI)[B", new ByteArray(vm, data), data.length);
+        byte[] data = new byte[16];
         return array.getValue();
     }
 

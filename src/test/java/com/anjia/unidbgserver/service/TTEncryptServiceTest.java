@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author AnJia
  * @since 2021-08-02 16:31
- */
+@RunWith(SpringRunner.class)
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
