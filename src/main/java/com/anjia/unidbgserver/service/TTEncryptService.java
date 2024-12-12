@@ -180,5 +180,3 @@ public class TTEncryptService {
         ByteArray array = TTEncryptUtils.callStaticJniMethodObject(emulator, "ttEncrypt([BI)[B", new ByteArray(vm, body.getBytes()), body.getBytes().length);
         return array.getValue();
     }
-185 |
-}
