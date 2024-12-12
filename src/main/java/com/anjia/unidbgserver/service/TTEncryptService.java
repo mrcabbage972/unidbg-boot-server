@@ -22,7 +22,6 @@ import com.github.unidbg.memory.Memory;
 import com.github.unidbg.utils.Inspector;
 import com.sun.jna.Pointer;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
@@ -178,9 +177,8 @@ public class TTEncryptService {
         //}
         byte[] data = new byte[16];
         // 执行Jni方法
-        ByteArray array = TTEncryptUtils.callStaticJniMethodObject(emulator, "ttEncrypt([BI)[B", new ByteArray(vm, data), data.length);
-        byte[] data = new byte[16];
+        ByteArray array = TTEncryptUtils.callStaticJniMethodObject(emulator, "ttEncrypt([BI)[B", new ByteArray(vm, body.getBytes()), body.getBytes().length);
         return array.getValue();
     }
-
+185 |
 }
