@@ -29,9 +29,9 @@ import java.io.IOException;
 @Slf4j
 public class TTEncryptService {
 
-    private final AndroidEmulator emulator;
-    private final VM vm;
-    private final Module module;
+        private final Module module;
+        private final Class<?> clazz;
+        private final Method method;
 
     private final DvmClass TTEncryptUtils;
     private final static String TT_ENCRYPT_LIB_PATH = "data/apks/so/libttEncrypt.so";
@@ -65,6 +65,11 @@ public class TTEncryptService {
         dm.callJNI_OnLoad(emulator);
 
         TTEncryptUtils = vm.resolveClass("com/bytedance/frameworks/core/encrypt/TTEncryptUtils");
+        // get the module for the class from the classpath
+        module = ModuleLayer.boot().findModule("java.base").orElseThrow(() -> new UnsupportedOperationException("Module for java.base not found"));
+        // load the class from the module
+        clazz = module.findClass("com.anjia.unidbgserver.service.TTEncryptService");
+        method = clazz.getDeclaredMethod("ttEncrypt", String.class);
     }
 
     public void destroy() throws IOException {
