@@ -32,10 +32,8 @@ public class TTEncryptService {
     private final AndroidEmulator emulator;
     private final VM vm;
     private final Module module;
-
     private final DvmClass TTEncryptUtils;
     private final static String TT_ENCRYPT_LIB_PATH = "data/apks/so/libttEncrypt.so";
-    private final Boolean DEBUG_FLAG;
 
     @SneakyThrows TTEncryptService(UnidbgProperties unidbgProperties) {
         DEBUG_FLAG = unidbgProperties.isVerbose();
@@ -178,4 +176,7 @@ public class TTEncryptService {
         return array.getValue();
     }
 
+    public static void main(String[] args) {
+        System.out.println(TT_ENCRYPT_LIB_PATH);
+    }
 }
