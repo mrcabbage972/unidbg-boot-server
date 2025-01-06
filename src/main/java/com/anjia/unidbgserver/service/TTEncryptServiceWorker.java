@@ -23,9 +23,9 @@ public class TTEncryptServiceWorker extends Worker {
     private TTEncryptService ttEncryptService;
 
     @Autowired
-    public void init(UnidbgProperties unidbgProperties) {
+    public void setUnidbgProperties(UnidbgProperties unidbgProperties) {
         this.unidbgProperties = unidbgProperties;
-    }
+     }
 
     public TTEncryptServiceWorker() {
         super(WorkerPoolFactory.create(TTEncryptServiceWorker::new, Runtime.getRuntime().availableProcessors()));
@@ -37,13 +37,13 @@ public class TTEncryptServiceWorker extends Worker {
 
     @Autowired
     public TTEncryptServiceWorker(UnidbgProperties unidbgProperties,
-                                  @Value("${spring.task.execution.pool.core-size:4}") int poolSize) {
-        super(WorkerPoolFactory.create(TTEncryptServiceWorker::new, Runtime.getRuntime().availableProcessors()));
+                                  @Value("${spring.task.execution.pool.core-size:4}") int poolSize,
+                                  @Value("${spring.task.execution.pool.max-size:4}") int maxSize) {
+        super(WorkerPoolFactory.create(TTEncryptServiceWorker::new, maxSize));
         this.unidbgProperties = unidbgProperties;
         if (this.unidbgProperties.isAsync()) {
-            pool = WorkerPoolFactory.create(pool -> new TTEncryptServiceWorker(unidbgProperties.isDynarmic(),
-                unidbgProperties.isVerbose(), pool), Math.max(poolSize, 4));
-            log.info("线程池为:{}", Math.max(poolSize, 4));
+            pool = WorkerPoolFactory.create(pool -> new TTEncryptServiceWorker(unidbgProperties.isDynarmic(), unidbgProperties.isVerbose(), pool), maxSize);
+            log.info("线程池为:{}", maxSize);
         } else {
             this.ttEncryptService = new TTEncryptService(unidbgProperties);
         }

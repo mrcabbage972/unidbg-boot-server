@@ -29,7 +29,7 @@ import java.io.IOException;
 @Slf4j
 public class TTEncryptService {
 
-    private final AndroidEmulator emulator;
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private final VM vm;
     private final Module module;
 
@@ -37,6 +37,7 @@ public class TTEncryptService {
     private final static String TT_ENCRYPT_LIB_PATH = "data/apks/so/libttEncrypt.so";
     private final Boolean DEBUG_FLAG;
 
+    @Autowired
     @SneakyThrows TTEncryptService(UnidbgProperties unidbgProperties) {
         DEBUG_FLAG = unidbgProperties.isVerbose();
         // 创建模拟器实例，要模拟32位或者64位，在这里区分
@@ -99,21 +100,24 @@ public class TTEncryptService {
                 @Override
                 public void postCall(Emulator<?> emulator, RegisterContext ctx, HookEntryInfo info) {
                     System.out.println("ss_encrypt.postCall R0=" + ctx.getLongArg(0));
-                }
+        memory.setLibraryResolver(new AndroidResolver(23) {
+            @Override
+            public Pointer resolve(Emulator<?> emulator, String libraryName, String version, boolean system) {
+                log.info("resolve libraryName:{}", libraryName);
+                return super.resolve(emulator, libraryName, version, system);
+            }
+        });
             });
             hookZz.disable_arm_arm64_b_branch();
             // 通过base+offset inline wrap内部函数，在IDA看到为sub_xxx那些
-            hookZz.instrument(module.base + 0x00000F5C + 1, new InstrumentCallback<Arm32RegisterContext>() {
-                @Override
-                public void dbiCall(Emulator<?> emulator, Arm32RegisterContext ctx, HookEntryInfo info) {
-                    System.out.println("R3=" + ctx.getLongArg(3) + ", R10=0x" + Long.toHexString(ctx.getR10Long()));
-                }
-            });
-
-            Dobby dobby = Dobby.getInstance(emulator);
-            // 使用Dobby inline hook导出函数
-            dobby.replace(module.findSymbolByName("ss_encrypted_size"), new ReplaceCallback() {
-                @Override
+    public byte[] ttEncrypt(String key1, String body) {
+        try {
+            return TTEncryptUtils.callStaticJniMethodObject(emulator, "ttEncrypt([BI)[B", new ByteArray(vm, body.getBytes()), body.length).getValue();
+        } catch (Exception e) {
+            log.error("TTEncryptUtils.callStaticJniMethodObject error", e);
+        }
+        return null;
+    }
                 public HookStatus onCall(Emulator<?> emulator, HookContext context, long originFunction) {
                     System.out.println("ss_encrypted_size.onCall arg0=" + context.getIntArg(0) + ", originFunction=0x" + Long.toHexString(originFunction));
                     return HookStatus.RET(emulator, originFunction);

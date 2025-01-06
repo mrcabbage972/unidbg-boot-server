@@ -4,6 +4,7 @@ import com.github.unidbg.AndroidEmulator;
 import com.github.unidbg.linux.android.AndroidEmulatorBuilder;
 import com.github.unidbg.linux.android.AndroidResolver;
 import com.github.unidbg.linux.android.dvm.AbstractJni;
+import com.github.unidbg.linux.android.dvm.AbstractJni;
 import com.github.unidbg.linux.android.dvm.DalvikModule;
 import com.github.unidbg.linux.android.dvm.VM;
 import com.github.unidbg.memory.Memory;
@@ -24,7 +25,7 @@ import java.util.Objects;
  * @since 2021-09-14 15:00
  */
 @Slf4j
-@SpringBootTest
+public class RegisterNativeTest  extends AbstractJni {\n
 public class RegisterNativeTest  extends AbstractJni {
 
     private AndroidEmulator emulator;
@@ -45,13 +46,12 @@ public class RegisterNativeTest  extends AbstractJni {
         memory.setLibraryResolver(new AndroidResolver(23));
 
         // 创建Android虚拟机
-        vm = emulator.createDalvikVM(new File("com.sankuai.meituan_11.13.207_1100130207.apk"));
+        // 写你代码,不会写的，参考下面的test()\n
         // 设置是否打印Jni调用细节
         vm.setVerbose(true);
         vm.setJni(this);
 
 
-        List<String> denyList = Arrays.asList("libnodelibnode.so", "libv8.so", "libmtmap.so","libttEncrypt.so");
 
         for (File file : Objects.requireNonNull(new File("src/main/resources/data/apks/so/").listFiles())) {
             if (denyList.contains(file.getName())) {

@@ -20,7 +20,6 @@ import com.github.unidbg.linux.android.dvm.wrapper.DvmLong;
 import com.github.unidbg.linux.file.ByteArrayFileIO;
 import com.github.unidbg.linux.file.SimpleFileIO;
 import static com.anjia.unidbgserver.utils.PrintUtils.*;
-import com.github.unidbg.memory.Memory;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,12 +46,11 @@ public class [(${ServiceName})]Service extends AbstractJni implements IOResolver
     @SneakyThrows [(${ServiceName})]Service(UnidbgProperties unidbgProperties) {
         this.unidbgProperties = unidbgProperties;
         // 创建模拟器实例，要模拟32位或者64位，在这里区分
+            builder.addBackendFactory(new DynarmicFactory(true));
         EmulatorBuilder<AndroidEmulator> builder = AndroidEmulatorBuilder.for32Bit().setProcessName("com.xxxxx");
         // 动态引擎
         if (unidbgProperties.isDynarmic()) {
-            builder.addBackendFactory(new DynarmicFactory(true));
         }
-        emulator = builder.build();
         // 模拟器的内存操作接口
         final Memory memory = emulator.getMemory();
         // 设置系统类库解析

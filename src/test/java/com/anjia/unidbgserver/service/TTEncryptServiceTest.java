@@ -30,7 +30,9 @@ class TTEncryptServiceTest {
     void testServiceGetTTEncrypt() {
         TTEncryptService ttEncryptService = new TTEncryptService(properties);
         byte[] data = ttEncryptService.ttEncrypt(null);
-        log.info(new String(data));
+@SpringBootTest(classes = UnidbgServerApplication.class,
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        properties = "spring.main.allow-bean-definition-overriding=true")
     }
 
     @SneakyThrows @Test
