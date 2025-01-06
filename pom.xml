@@ -162,6 +162,9 @@
                             </entrypoint>
                             <args>
                                 <arg>sh</arg>
+                            </entrypoint>
+                            <args>
+                                <arg>sh</arg>
                                 <arg>-c</arg>
                                 <arg>chmod +x /entrypoint.sh &amp;&amp; /entrypoint.sh</arg>
                             </args>
