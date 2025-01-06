@@ -156,13 +156,11 @@
                             </paths>
                         </extraDirectories>
                         <container>
-                            <entrypoint>
-                                <shell>/sbin/tini</shell>
-                                <option>--</option>
-                            </entrypoint>
                             <args>
                                 <arg>sh</arg>
-                            </entrypoint>
+                                <arg>-c</arg>
+                                <arg>chmod +x /entrypoint.sh &amp;&amp; /entrypoint.sh</arg>
+                            </args>
                             <args>
                                 <arg>sh</arg>
                                 <arg>-c</arg>
@@ -172,7 +170,10 @@
                                 <port>9999</port>
                             </ports>
                         </container>
-                    </configuration>
+                        <entrypoint>
+                            <shell>/sbin/tini</shell>
+                            <option>--</option>
+                        </entrypoint>
                 </plugin>
             </plugins>
         </pluginManagement>
