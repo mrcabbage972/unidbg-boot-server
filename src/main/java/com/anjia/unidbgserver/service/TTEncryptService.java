@@ -67,7 +67,8 @@ public class TTEncryptService {
         TTEncryptUtils = vm.resolveClass("com/bytedance/frameworks/core/encrypt/TTEncryptUtils");
     }
 
-    public void destroy() throws IOException {
+    @Override
+    public void close() throws IOException {
         emulator.close();
         if (DEBUG_FLAG) {
             log.info("destroy");

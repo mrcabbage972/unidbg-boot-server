@@ -27,10 +27,10 @@ public class AutoGeneratorTest {
         vars.put("ServiceName", serviceName);
         vars.put("content", "");
 
-        ThymeleafUtils.generateByTemplate("Service", vars, String.format("src/main/java/com/anjia/unidbgserver/service/%sService.java", serviceName));
-        ThymeleafUtils.generateByTemplate("ServiceWorker", vars, String.format("src/main/java/com/anjia/unidbgserver/service/%sServiceWorker.java", serviceName));
-        ThymeleafUtils.generateByTemplate("Controller", vars, String.format("src/main/java/com/anjia/unidbgserver/web/%sController.java", serviceName));
-        ThymeleafUtils.generateByTemplate("ServiceTest", vars, String.format("src/test/java/com/anjia/unidbgserver/service/%sServiceTest.java", serviceName));
+        ThymeleafUtils.generateByTemplate("Service", vars, String.formatted("src/main/java/com/anjia/unidbgserver/service/%sService.java", serviceName));
+        ThymeleafUtils.generateByTemplate("ServiceWorker", vars, String.formatted("src/main/java/com/anjia/unidbgserver/service/%sServiceWorker.java", serviceName));
+        ThymeleafUtils.generateByTemplate("Controller", vars, String.formatted("src/main/java/com/anjia/unidbgserver/web/%sController.java", serviceName));
+        ThymeleafUtils.generateByTemplate("ServiceTest", vars, String.formatted("src/test/java/com/anjia/unidbgserver/service/%sServiceTest.java", serviceName));
 
         log.info("linux/mac       : curl http://localhost:9999/api/{}/do-work", serviceName.toLowerCase());
         log.info("windows 浏览器打开: http://localhost:9999/api/{}/do-work", serviceName.toLowerCase());

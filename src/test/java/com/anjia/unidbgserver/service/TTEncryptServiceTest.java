@@ -28,14 +28,15 @@ class TTEncryptServiceTest {
 
     @SneakyThrows @Test
     void testServiceGetTTEncrypt() {
-        TTEncryptService ttEncryptService = new TTEncryptService(properties);
         byte[] data = ttEncryptService.ttEncrypt(null);
         log.info(new String(data));
     }
 
+
     @SneakyThrows @Test
     void testWorkerGetTTEncrypt() {
-        byte[] data = ttEncryptServiceWorker.ttEncrypt(null, null).get();
         log.info(new String(data));
+    }
+        }
     }
 }

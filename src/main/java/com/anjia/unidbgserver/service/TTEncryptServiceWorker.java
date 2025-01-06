@@ -88,5 +88,6 @@ public class TTEncryptServiceWorker extends Worker {
     @SneakyThrows
     @Override public void destroy() {
         ttEncryptService.destroy();
+
     }
 }
