@@ -83,14 +83,9 @@
                 <exclusion>
                     <artifactId>unidbg-api</artifactId>
                     <groupId>com.github.zhkl0228</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.github.zhkl0228</groupId>
-            <artifactId>unidbg-unicorn2</artifactId>
             <version>${unidbg.version}</version>
         </dependency>
+            <artifactId>spring-boot-starter-web</artifactId>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
